@@ -132,15 +132,27 @@ const updateUser = async (req, res) => {
       });
     }
 
-    // Check if the email already exists
-    const existingUser = await User.findOne({ id });
-    if (existingUser) {
-      return res.status(400).json({
-        status: false,
-        message: "User Not Found.",
-        data: false,
-      });
-    }
+       // Convert the _id to ObjectId
+       let userId;
+       try {
+         userId = mongoose.Types.ObjectId(id);
+       } catch (error) {
+         return res.status(400).json({
+           status: false,
+           message: "Invalid User ID format.",
+           data: false,
+         });
+       }
+   
+       // Check if the user exists
+       const existingUser = await User.findById(userId);
+       if (!existingUser) {
+         return res.status(404).json({
+           status: false,
+           message: "User not found.",
+           data: false,
+         });
+       }
 
     // Update the user
    if(email) existingUser.email = email;

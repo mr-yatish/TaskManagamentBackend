@@ -1,6 +1,7 @@
 const User = require("../models/User.model"); // Path to your User schema
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { default: mongoose } = require("mongoose");
 
 // Secret key for JWT
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
@@ -132,7 +133,7 @@ const updateUser = async (req, res) => {
     }
 
     // Check if the email already exists
-    const existingUser = await User.findById(_id);
+    const existingUser = await User.findOne({ _id });
     if (existingUser) {
       return res.status(400).json({
         status: false,

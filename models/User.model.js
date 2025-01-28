@@ -22,6 +22,13 @@ const userSchema = new Schema(
       type: String, // Store the URL/path to the user's profile image
       default: null,
     },
+    dateOfBirth: {
+      type: Date,
+    },
+    gender: {
+      type: String,
+      enum : ['Male','Female','Others'],
+    },
     isActive: {
       type: Boolean,
       default: true,

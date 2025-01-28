@@ -118,7 +118,56 @@ const loginUser = async (req, res) => {
   }
 };
 
+// Update User
+const updateUser = async (req, res) => {
+  try {
+    const { _id, email, name, profileImage, dateOfBirth, gender } = req.body;
+    // Validate input fields
+    if (!_id) {
+      return res.status(400).json({
+        status: false,
+        message: "User ID is required.",
+        data: false,
+      });
+    }
+
+    // Check if the email already exists
+    const existingUser = await User.findById(_id);
+    if (existingUser) {
+      return res.status(400).json({
+        status: false,
+        message: "User Not Found.",
+        data: false,
+      });
+    }
+
+    // Update the user
+   if(email) existingUser.email = email;
+   if(name) existingUser.name = name;
+   if(profileImage) existingUser.profileImage = profileImage;
+   if(dateOfBirth) existingUser.dateOfBirth = dateOfBirth;
+   if(gender) existingUser.gender = gender;
+
+    // Save the user in the database
+    await existingUser.save();
+
+    return res.status(201).json({
+      status: true,
+      message: "User updated successfully.",
+      data: existingUser,
+    });
+  } catch (error) {
+    console.error("Error registering user:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error.",
+      data: false,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  updateUser
 };

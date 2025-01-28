@@ -122,7 +122,7 @@ const loginUser = async (req, res) => {
 // Update User
 const updateUser = async (req, res) => {
   try {
-    const { id, email, name, profileImage, dateOfBirth, gender } = req.body;
+    const { id, email, name, profileImage, dob, gender } = req.body;
     // Validate input fields
     if (!id) {
       return res.status(400).json({
@@ -158,7 +158,7 @@ const updateUser = async (req, res) => {
    if(email) existingUser.email = email;
    if(name) existingUser.name = name;
    if(profileImage) existingUser.profileImage = profileImage;
-   if(dateOfBirth) existingUser.dateOfBirth = dateOfBirth;
+   if(dob) existingUser.dateOfBirth = dob;
    if(gender) existingUser.gender = gender;
 
     // Save the user in the database

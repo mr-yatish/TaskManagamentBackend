@@ -119,58 +119,42 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Update User
+// Update User Controller
 const updateUser = async (req, res) => {
   try {
     const { id, email, name, profileImage, dob, gender } = req.body;
-    // Validate input fields
-    if (!id) {
+
+    // Validate User ID
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         status: false,
-        message: "User ID is required.",
+        message: "Invalid User ID format.",
         data: false,
       });
     }
 
-       // Convert the _id to ObjectId
-       let userId;
-       try {
-         userId = mongoose.Types.ObjectId(id);
-       } catch (error) {
-         return res.status(400).json({
-           status: false,
-           message: "Invalid User ID format.",
-           data: false,
-         });
-       }
-   
-       // Check if the user exists
-       const existingUser = await User.findById(userId);
-       if (!existingUser) {
-         return res.status(404).json({
-           status: false,
-           message: "User not found.",
-           data: false,
-         });
-       }
+    // Update user directly
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $set: { email, name, profileImage, dob, gender } },
+      { new: true, runValidators: true } // Return the updated document and apply schema validators
+    );
 
-    // Update the user
-   if(email) existingUser.email = email;
-   if(name) existingUser.name = name;
-   if(profileImage) existingUser.profileImage = profileImage;
-   if(dob) existingUser.dateOfBirth = dob;
-   if(gender) existingUser.gender = gender;
+    if (!updatedUser) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found.",
+        data: false,
+      });
+    }
 
-    // Save the user in the database
-    await existingUser.save();
-
-    return res.status(201).json({
+    return res.status(200).json({
       status: true,
       message: "User updated successfully.",
-      data: existingUser,
+      data: updatedUser,
     });
   } catch (error) {
-    console.error("Error registering user:", error);
+    console.error("Error updating user:", error);
     return res.status(500).json({
       status: false,
       message: "Internal server error.",
@@ -182,5 +166,5 @@ const updateUser = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
-  updateUser
+  updateUser,
 };

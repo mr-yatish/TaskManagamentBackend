@@ -177,7 +177,7 @@ const getUserById = async (req, res) => {
     }
 
     // Fetch user by ID
-    const user = await User.findById(id);
+    const user = await User.findById(id).select("-password -__v -createdAt -updatedAt -isActive");
 
     if (!user) {
       return res.status(404).json({

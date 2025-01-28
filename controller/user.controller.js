@@ -122,9 +122,9 @@ const loginUser = async (req, res) => {
 // Update User
 const updateUser = async (req, res) => {
   try {
-    const { _id, email, name, profileImage, dateOfBirth, gender } = req.body;
+    const { id, email, name, profileImage, dateOfBirth, gender } = req.body;
     // Validate input fields
-    if (!_id) {
+    if (!id) {
       return res.status(400).json({
         status: false,
         message: "User ID is required.",
@@ -133,7 +133,7 @@ const updateUser = async (req, res) => {
     }
 
     // Check if the email already exists
-    const existingUser = await User.findOne({ _id });
+    const existingUser = await User.findOne({ id });
     if (existingUser) {
       return res.status(400).json({
         status: false,

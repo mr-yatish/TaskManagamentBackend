@@ -163,8 +163,48 @@ const updateUser = async (req, res) => {
   }
 };
 
+// Get User By id
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Validate User ID
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        status: false,
+        message: "Invalid User ID format.",
+        data: false,
+      });
+    }
+
+    // Fetch user by ID
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found.",
+        data: false,
+      });
+    }
+
+    return res.status(200).json({
+      status: true,
+      message: "User found.",
+      data: user,
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error.",
+      data: false,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   updateUser,
+  getUserById,
 };

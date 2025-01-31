@@ -14,7 +14,7 @@ app.use(express.json()); // To parse JSON request bodies
 
 // Router
 app.use("/api/user", require("./routes/user.router"));
-
+app.use("/api/task", require("./routes/task.router"));
 
 // Start the server
 app.listen(PORT || 3001, () => {

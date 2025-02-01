@@ -14,7 +14,7 @@ const createTask = async (req, res) => {
       endto,
     };
     // Validate required fields
-    if (!title || !user || !progress || !date || !startfrom || !endto) {
+    if (!title || !user  || !date || !startfrom || !endto) {
       return res.status(400).json({
         status: false,
         message: "Please provide all required fields",

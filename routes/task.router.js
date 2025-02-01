@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import the controller
-const taskController = require("../controller/task.controller");
+const taskController = require("../controller/Task.controller");
 
 // Create a new task
 router.post("/create", taskController.createTask);

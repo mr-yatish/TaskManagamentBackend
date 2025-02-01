@@ -9,7 +9,7 @@ const taskController = require("../controller/task.controller");
 router.post("/create", taskController.createTask);
 
 // Get all tasks
-router.get("/list", taskController.getTaskList);
+router.get("/list/:user", taskController.getTaskList);
 
 // Get task by ID
 router.get("/:taskId", taskController.getTaskById);

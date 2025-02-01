@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Task = require("./models/task"); // Assuming task model is stored in models/task.js
+const Task = require("../models/Task.model"); // Assuming task model is stored in models/task.js
 
 // 1. **Create Task**
 const createTask = async (taskData) => {

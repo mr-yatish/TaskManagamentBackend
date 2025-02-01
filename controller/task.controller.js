@@ -43,7 +43,8 @@ const createTask = async (req, res) => {
 // Task List
 const getTaskList = async (req, res) => {
   try {
-    const response = await taskService.getAllTasks();
+    const { user } = req.params;
+    const response = await taskService.getAllTasks(user);
     return res.status(response.status === true ? 200 : 400).json(response);
   } catch (error) {
     return res.status(500).json({

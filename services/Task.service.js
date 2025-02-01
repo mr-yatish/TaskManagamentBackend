@@ -26,9 +26,9 @@ const getTaskById = async (taskId) => {
 };
 
 // 3. **Get All Tasks**
-const getAllTasks = async () => {
+const getAllTasks = async (user) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find({ user: user, deleteFlag: false });
     return { status: true, message: "Tasks retrieved", data: tasks };
   } catch (error) {
     return { status: false, message: error.message, data: false };

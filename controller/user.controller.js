@@ -122,7 +122,7 @@ const loginUser = async (req, res) => {
 // Update User Controller
 const updateUser = async (req, res) => {
   try {
-    const { id, email, name, profileImage, dob, gender } = req.body;
+    const { id, email, name, profileImage, dateOfBirth, gender } = req.body;
 
     // Validate User ID
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
@@ -136,7 +136,7 @@ const updateUser = async (req, res) => {
     // Update user directly
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { $set: { email, name, profileImage, dateOfBirth:dob, gender } },
+      { $set: { email, name, profileImage, dateOfBirth, gender } },
       { new: true, runValidators: true } // Return the updated document and apply schema validators
     );
 

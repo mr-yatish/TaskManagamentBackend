@@ -24,6 +24,7 @@ const userSchema = new Schema(
     },
     dateOfBirth: {
       type: Date,
+      default: null,
     },
     gender: {
       type: String,

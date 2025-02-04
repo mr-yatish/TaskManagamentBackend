@@ -136,7 +136,7 @@ const updateUser = async (req, res) => {
     // Update user directly
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { $set: { email, name, profileImage, dob, gender } },
+      { $set: { email, name, profileImage, dateOfBirth:dob, gender } },
       { new: true, runValidators: true } // Return the updated document and apply schema validators
     );
 

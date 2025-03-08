@@ -28,6 +28,7 @@ app.use(express.json());
 // Routers
 app.use("/api/user", require("./routes/user.router"));
 app.use("/api/task", require("./routes/task.router"));
+app.use("/api/group", require("./routes/group.router"));
 
 // Move this outside of the route so it listens globally
 io.on("connection", (socket) => {

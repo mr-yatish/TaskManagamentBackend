@@ -201,9 +201,28 @@ const getUserById = async (req, res) => {
   }
 };
 
+// Get All Users
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({ isActive: true });
+    return res.status(200).json({
+      status: true,
+      message: "Users found.",
+      data: users,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error.",
+      data: false,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   updateUser,
   getUserById,
+  getAllUsers
 };

@@ -41,7 +41,6 @@ io.on("connection", (socket) => {
 // Route to send messages
 app.post("/send", (req, res) => {
   const { message } = req.body;
-  console.log(message);
   
   io.emit("pushMessage", message);
   res.status(200).send("Message sent");

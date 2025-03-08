@@ -12,5 +12,6 @@ router.post("/update", userController.updateUser);
 
 // Get user by ID
 router.get("/:id", userController.getUserById);
+router.get("/user-list", userController.getAllUsers);
 
 module.exports = router;

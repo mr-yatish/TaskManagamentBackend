@@ -21,10 +21,10 @@ const createGroup = async (req, res) => {
     }
     // Validate user exists
     const groupExists = await groupServices.checkGroupExists(title);
-    if (!groupExists) {
+    if (groupExists) {
       return res
         .status(400)
-        .json({ status: false, message: "Group not found", data: false });
+        .json({ status: false, message: "Group Already Exists With This Name", data: false });
     }
 
     const response = await groupServices.createGroup(groupData);

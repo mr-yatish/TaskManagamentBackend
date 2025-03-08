@@ -3,7 +3,7 @@ const groupServices = require("../services/Group.service");
 // Create Group
 const createGroup = async (req, res) => {
   try {
-    const { title, description, owner, members } = req.body;
+    const { title, description, owner, members = [] } = req.body;
 
     const groupData = {
       title,
@@ -11,6 +11,9 @@ const createGroup = async (req, res) => {
       owner,
       members,
     };
+    if (members.length === 0) {
+      groupData.members.push(owner);
+    }
     // Validate required fields
     if (!title || !description || !owner || !members) {
       return res.status(400).json({
@@ -24,7 +27,11 @@ const createGroup = async (req, res) => {
     if (groupExists) {
       return res
         .status(400)
-        .json({ status: false, message: "Group Already Exists With This Name", data: false });
+        .json({
+          status: false,
+          message: "Group Already Exists With This Name",
+          data: false,
+        });
     }
 
     const response = await groupServices.createGroup(groupData);
@@ -68,8 +75,24 @@ const addGroupMember = async (req, res) => {
   }
 };
 
+// Get Group List by User
+const getGroupList = async (req, res) => {
+  try {
+    const { user } = req.params;
+    const response = await groupServices.getGroupListByUser(user);
+    return res.status(response.status === true ? 200 : 400).json(response);
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+      data: false,
+    });
+  }
+};
+
 
 module.exports = {
   createGroup,
   addGroupMember,
+  getGroupList
 };

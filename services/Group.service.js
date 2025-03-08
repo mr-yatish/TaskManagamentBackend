@@ -44,8 +44,19 @@ const addGroupMember = async (group, member) => {
   }
 };
 
+// 4. **Get Group List By user**
+const getGroupListByUser = async (user) => {
+  try {
+    const groups = await Group.find({ members: user, deleteFlag: false });
+    return { status: true, message: "Group list", data: groups };
+  } catch (error) {
+    return { status: false, message: error.message, data: false };
+  }
+};
+
 module.exports = {
   createGroup,
   checkGroupExists,
   addGroupMember,
+  getGroupListByUser
 };

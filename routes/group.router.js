@@ -9,5 +9,8 @@ const groupController = require("../controller/group.controller");
 router.post("/create", groupController.createGroup);
 router.post("/add-member", groupController.addGroupMember);
 
+// Get Group 
+router.get("/list/:user", groupController.getGroupList);
+
 
 module.exports = router;
